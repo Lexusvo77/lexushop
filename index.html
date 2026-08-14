@@ -1,13 +1,2241 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Lexushop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEXUS | Tienda</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#fff;
+  color:#111;
+}
+
+button,input,select{font-family:inherit}
+button{cursor:pointer}
+
+/* ================= INICIO ================= */
+
+#welcome{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+  background:
+    linear-gradient(#0005,#0008),
+    url("https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1800&q=85")
+    center/cover;
+  transition:.5s;
+}
+
+#welcome.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.welcome-content h1{
+  font-size:clamp(60px,12vw,130px);
+  font-weight:400;
+  letter-spacing:12px;
+  margin:15px 0;
+}
+
+.welcome-content small{
+  letter-spacing:4px;
+}
+
+.start{
+  border:1px solid #fff;
+  background:#fff;
+  color:#111;
+  padding:15px 32px;
+  letter-spacing:2px;
+}
+
+/* ================= BARRA ================= */
+
+.topbar{
+  background:#111;
+  color:#fff;
+  text-align:center;
+  padding:9px;
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+/* ================= NAV ================= */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:#fff;
+  border-bottom:1px solid #eee;
+}
+
+.nav{
+  max-width:1400px;
+  height:70px;
+  margin:auto;
+  padding:0 22px;
+  display:flex;
+  align-items:center;
+}
+
+.logo{
+  font-size:26px;
+  font-weight:bold;
+  letter-spacing:7px;
+  margin-right:auto;
+}
+
+.menu{
+  display:flex;
+  gap:25px;
+}
+
+.menu button,
+.icon{
+  border:0;
+  background:none;
+  font-size:11px;
+  letter-spacing:1px;
+}
+
+.actions{
+  display:flex;
+  gap:14px;
+  margin-left:25px;
+}
+
+.icon{font-size:18px}
+
+/* ================= PORTADA ================= */
+
+.hero{
+  min-height:68vh;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  color:#fff;
+  background:
+    linear-gradient(#0003,#0007),
+    url("https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1800&q=85")
+    center/cover;
+}
+
+.hero h1{
+  font-size:clamp(50px,9vw,100px);
+  font-weight:400;
+  letter-spacing:10px;
+  margin:15px 0;
+}
+
+.hero p{
+  max-width:500px;
+  margin:0 auto 25px;
+}
+
+.btn{
+  border:1px solid #111;
+  background:#111;
+  color:#fff;
+  padding:14px 24px;
+  letter-spacing:2px;
+  font-size:10px;
+}
+
+/* ================= TIENDA ================= */
+
+.shop{
+  max-width:1400px;
+  margin:auto;
+  padding:60px 24px;
+}
+
+.title{margin-bottom:30px}
+
+.title h2{
+  font-size:26px;
+  font-weight:500;
+  letter-spacing:3px;
+}
+
+.title p{
+  color:#777;
+  font-size:12px;
+  margin-top:8px;
+}
+
+.categories{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:35px;
+}
+
+.category{
+  background:#fff;
+  border:1px solid #ccc;
+  padding:12px 18px;
+  font-size:10px;
+  letter-spacing:1.5px;
+}
+
+.category.active,
+.category:hover{
+  background:#111;
+  color:#fff;
+}
+
+/* ================= MARCAS DE GORRAS ================= */
+
+#brands{
+  display:none;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-bottom:35px;
+}
+
+.brand{
+  min-height:180px;
+  border:1px solid #ddd;
+  background:#f7f7f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.3s;
+}
+
+.brand:hover{
+  background:#111;
+  color:#fff;
+}
+
+.brand h3{letter-spacing:3px}
+
+#backBrands{
+  display:none;
+  border:0;
+  background:none;
+  margin-bottom:25px;
+  font-size:10px;
+  letter-spacing:1px;
+}
+
+/* ================= PRODUCTOS ================= */
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.product-img{
+  aspect-ratio:3/4;
+  overflow:hidden;
+  background:#eee;
+}
+
+.product-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:.4s;
+}
+
+.product:hover img{
+  transform:scale(1.04);
+}
+
+.product-info{
+  padding:12px 2px;
+}
+
+.product-info h3{
+  font-size:13px;
+  font-weight:500;
+}
+
+.product-info p{
+  color:#777;
+  font-size:11px;
+  margin:5px 0;
+}
+
+.price{
+  color:#111!important;
+  font-weight:bold;
+}
+
+.product-info .btn{
+  width:100%;
+  margin-top:8px;
+}
+
+/* ================= MODALES ================= */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:500;
+  background:#0008;
+}
+
+.modal.open{
+  display:flex;
+  justify-content:flex-end;
+}
+
+.panel{
+  width:min(540px,100%);
+  height:100%;
+  background:#fff;
+  padding:25px;
+  overflow:auto;
+}
+
+.panel-head{
+  display:flex;
+  justify-content:space-between;
+  border-bottom:1px solid #ddd;
+  padding-bottom:18px;
+  margin-bottom:20px;
+}
+
+.close{
+  border:0;
+  background:none;
+  font-size:28px;
+}
+
+/* ================= CARRITO ================= */
+
+.cart-item{
+  display:grid;
+  grid-template-columns:65px 1fr auto;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid #eee;
+}
+
+.cart-item img{
+  width:65px;
+  height:80px;
+  object-fit:cover;
+}
+
+.cart-item button{
+  border:0;
+  background:none;
+  font-size:20px;
+}
+
+.total{
+  display:flex;
+  justify-content:space-between;
+  font-weight:bold;
+  margin:25px 0;
+}
+
+.empty{
+  color:#777;
+  padding:30px 0;
+}
+
+/* ================= CONFIGURACIÓN ================= */
+
+.field{
+  margin-bottom:15px;
+}
+
+.field label{
+  display:block;
+  font-size:9px;
+  letter-spacing:1px;
+  margin-bottom:6px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  padding:11px;
+  border:1px solid #ccc;
+}
+
+.save{
+  width:100%;
+  border:0;
+  background:#111;
+  color:#fff;
+  padding:15px;
+}
+
+.admin-product{
+  border:1px solid #ddd;
+  padding:15px;
+  margin-bottom:15px;
+}
+
+.admin-product img{
+  width:90px;
+  height:110px;
+  object-fit:cover;
+  margin-bottom:10px;
+}
+
+/* ================= ENVÍOS ================= */
+
+.shipping-info{
+  margin-top:35px;
+  padding-top:25px;
+  border-top:1px solid #333;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  font-size:11px;
+  letter-spacing:1px;
+}
+
+.shipping-info strong{color:#fff}
+
+.shipping-info span{
+  color:#aaa;
+  font-size:10px;
+}
+
+/* ================= REDES ================= */
+
+.social-footer{
+  background:#111;
+  color:#fff;
+  text-align:center;
+  padding:55px 20px 30px;
+  margin-top:50px;
+}
+
+.social-logo{
+  font-size:28px;
+  font-weight:bold;
+  letter-spacing:7px;
+  margin-bottom:25px;
+}
+
+.social-text{
+  color:#aaa;
+  font-size:10px;
+  letter-spacing:2px;
+  margin-bottom:25px;
+}
+
+.social-links{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.social-links a{
+  color:#fff;
+  border:1px solid #555;
+  padding:13px 24px;
+  font-size:11px;
+  letter-spacing:1px;
+  text-decoration:none;
+}
+
+.copyright{
+  border-top:1px solid #333;
+  margin-top:40px;
+  padding-top:20px;
+  color:#777;
+  font-size:9px;
+}
+
+/* ================= MÓVIL ================= */
+
+@media(max-width:900px){
+
+  .menu{display:none}
+
+  .products{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  #brands{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:550px){
+
+  .shop{
+    padding:45px 14px;
+  }
+
+  #brands{
+    grid-template-columns:1fr;
+  }
+
+  .products{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+}
+</style>
 </head>
+
 <body>
 
-    <h1>Bienvenido a Lexushop</h1>
-    <p>Esta es mi página web.</p>
+<!-- ================= INICIO ================= -->
+
+<div id="welcome">
+
+  <div class="welcome-content">
+
+    <small>BIENVENIDO A</small>
+
+    <h1 id="welcomeLogo">LEXUS</h1>
+
+    <p id="welcomeText">
+      Tu estilo. Tu identidad.
+    </p>
+
+    <br>
+
+    <button class="start" onclick="startShop()">
+      COMENZAR
+    </button>
+
+  </div>
+
+</div>
+
+<div class="topbar">
+  ENVÍOS A TODA GUATEMALA
+</div>
+
+
+<!-- ================= NAV ================= -->
+
+<header>
+
+<nav class="nav">
+
+  <div class="logo" id="navLogo">
+    LEXUS
+  </div>
+
+  <div class="menu">
+
+    <button onclick="goHome()">
+      INICIO
+    </button>
+
+    <button onclick="goShop()">
+      TIENDA
+    </button>
+
+  </div>
+
+  <div class="actions">
+
+    <button class="icon" onclick="openSettings()">
+      ⚙️
+    </button>
+
+    <button class="icon" onclick="openCart()">
+      🛒 <span id="cartCount">0</span>
+    </button>
+
+  </div>
+
+</nav>
+
+</header>
+
+
+<!-- ================= PORTADA ================= -->
+
+<section class="hero" id="home">
+
+  <div>
+
+    <small>NUEVA COLECCIÓN</small>
+
+    <h1 id="heroTitle">
+      LEXUS
+    </h1>
+
+    <p id="heroText">
+      Moda contemporánea, elegante y diseñada para destacar.
+    </p>
+
+    <button class="btn" onclick="goShop()">
+      COMPRAR AHORA
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= TIENDA ================= -->
+
+<section class="shop" id="shop">
+
+  <div class="title">
+
+    <h2>
+      COLECCIÓN <span id="collectionName">LEXUS</span>
+    </h2>
+
+    <p>
+      Selecciona una categoría para explorar.
+    </p>
+
+  </div>
+
+
+  <div class="categories">
+
+    <button class="category active"
+      onclick="showCategory('Todos',this)">
+      TODOS
+    </button>
+
+    <button class="category"
+      onclick="showCategory('Camisas',this)">
+      CAMISAS
+    </button>
+
+    <button class="category"
+      onclick="showCategory('Polos',this)">
+      POLOS
+    </button>
+
+    <button class="category"
+      onclick="showCategory('Pantalones',this)">
+      PANTALONES
+    </button>
+
+    <button class="category"
+      onclick="showCategory('Suéteres',this)">
+      SUÉTERES
+    </button>
+
+    <button class="category"
+      onclick="showCategory('Billeteras',this)">
+      BILLETERAS
+    </button>
+
+    <!-- GORRAS -->
+
+    <button class="category"
+      onclick="showCaps(this)">
+      GORRAS
+    </button>
+
+    <button class="category"
+      onclick="showCategory('Zapatos',this)">
+      ZAPATOS
+    </button>
+
+  </div>
+
+
+  <!-- LAS MARCAS SOLO APARECEN AL TOCAR GORRAS -->
+
+  <div id="brands">
+
+    <div class="brand"
+      onclick="showBrand('Barba Hats')">
+
+      <h3>BARBA HATS</h3>
+
+    </div>
+
+    <div class="brand"
+      onclick="showBrand('Dandy')">
+
+      <h3>DANDY</h3>
+
+    </div>
+
+    <div class="brand"
+      onclick="showBrand('Otras')">
+
+      <h3>OTRAS MARCAS</h3>
+
+    </div>
+
+  </div>
+
+
+  <button id="backBrands"
+    onclick="backToBrands()">
+
+    ← VOLVER A MARCAS
+
+  </button>
+
+
+  <div class="products" id="products"></div>
+
+</section>
+
+
+<!-- ================= CARRITO ================= -->
+
+<div class="modal" id="cartModal">
+
+  <div class="panel">
+
+    <div class="panel-head">
+
+      <h2>CARRITO</h2>
+
+      <button class="close" onclick="closeCart()">×</button>
+
+    </div>
+
+    <div id="cartItems"></div>
+
+    <div class="total">
+
+      <span>SUBTOTAL</span>
+
+      <span id="cartSubtotal">Q0.00</span>
+
+    </div>
+
+    <div class="total">
+
+      <span>ENVÍO</span>
+
+      <span id="cartShipping">Q0.00</span>
+
+    </div>
+
+    <div class="total">
+
+      <span>TOTAL</span>
+
+      <span id="cartTotal">Q0.00</span>
+
+    </div>
+
+    <button class="btn"
+      style="width:100%"
+      onclick="openPayment()">
+
+      COMPRAR
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- ================= PAGO ================= -->
+
+<div class="modal" id="paymentModal">
+
+  <div class="panel">
+
+    <div class="panel-head">
+
+      <h2>FORMA DE PAGO</h2>
+
+      <button class="close"
+        onclick="closePayment()">
+        ×
+      </button>
+
+    </div>
+
+    <p>
+      Selecciona cómo deseas pagar.
+    </p>
+
+    <div style="margin:25px 0">
+
+      <button class="btn"
+        style="width:100%;margin-bottom:10px"
+        onclick="selectPayment('Tarjeta')">
+
+        💳 PAGAR CON TARJETA
+
+      </button>
+
+      <button class="btn"
+        style="width:100%"
+        onclick="selectPayment('Depósito / Transferencia')">
+
+        🏦 DEPÓSITO / TRANSFERENCIA
+
+      </button>
+
+    </div>
+
+    <button class="save"
+      onclick="sendWhatsApp()">
+
+      💬 ENVIAR PEDIDO POR WHATSAPP
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- ================= CONFIGURACIÓN ================= -->
+
+<div class="modal" id="settingsModal">
+
+  <div class="panel">
+
+    <div class="panel-head">
+
+      <h2>CONFIGURACIÓN</h2>
+
+      <button class="close"
+        onclick="closeSettings()">
+        ×
+      </button>
+
+    </div>
+
+
+    <p style="font-size:12px;color:#777;margin-bottom:20px">
+
+      Desde aquí puedes editar la apariencia,
+      productos, precios, WhatsApp y envíos.
+
+    </p>
+
+
+    <div class="field">
+
+      <label>NOMBRE DE LA MARCA</label>
+
+      <input id="setBrand">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>TÍTULO DE LA PORTADA</label>
+
+      <input id="setHeroTitle">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>TEXTO DE LA PORTADA</label>
+
+      <input id="setHeroText">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>TEXTO DE BIENVENIDA</label>
+
+      <input id="setWelcomeText">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>FONDO DE LA PORTADA</label>
+
+      <input id="setHeroBg"
+        placeholder="URL de imagen">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>FONDO DE COMENZAR</label>
+
+      <input id="setWelcomeBg"
+        placeholder="URL de imagen">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>WHATSAPP</label>
+
+      <input id="setWhatsapp"
+        value="50236891432">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>TIKTOK</label>
+
+      <input id="setTiktok"
+        placeholder="https://www.tiktok.com/@usuario">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>INSTAGRAM</label>
+
+      <input id="setInstagram"
+        placeholder="https://www.instagram.com/usuario">
+
+    </div>
+
+
+    <!-- ================= ENVÍOS ================= -->
+
+    <h3 style="margin:30px 0 15px">
+      ENVÍOS
+    </h3>
+
+
+    <div class="field">
+
+      <label>TEXTO DE ENVÍO</label>
+
+      <input id="setShippingText"
+        value="Envíos a toda Guatemala">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>TIPO DE ENVÍO</label>
+
+      <select id="setShippingType">
+
+        <option value="gratis">
+          Envío gratis
+        </option>
+
+        <option value="cobrado">
+          Cobrar envío
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>PRECIO DEL ENVÍO EN Q</label>
+
+      <input id="setShippingPrice"
+        type="number"
+        value="0">
+
+    </div>
+
+
+    <!-- ================= PRODUCTOS ================= -->
+
+    <h3 style="margin:30px 0 15px">
+      PRODUCTOS
+    </h3>
+
+    <div id="adminProducts"></div>
+
+
+    <button class="btn"
+      style="width:100%;margin-bottom:15px"
+      onclick="addProduct()">
+
+      + AGREGAR PRODUCTO
+
+    </button>
+
+
+    <button class="save"
+      onclick="saveSettings()">
+
+      GUARDAR TODOS LOS CAMBIOS
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="social-footer">
+
+  <div class="social-logo"
+    id="footerLogo">
+    LEXUS
+  </div>
+
+
+  <div class="social-text">
+    SÍGUENOS EN NUESTRAS PÁGINAS
+  </div>
+
+
+  <div class="social-links">
+
+    <a id="tiktokLink"
+      href="https://www.tiktok.com/"
+      target="_blank">
+
+      🎵 TikTok
+
+    </a>
+
+
+    <a id="instagramLink"
+      href="https://www.instagram.com/"
+      target="_blank">
+
+      📸 Instagram
+
+    </a>
+
+
+    <a id="whatsappLink"
+      href="https://wa.me/50236891432"
+      target="_blank">
+
+      💬 WhatsApp
+
+    </a>
+
+  </div>
+
+
+  <!-- ENVÍOS HASTA ABAJO -->
+
+  <div class="shipping-info">
+
+    <strong id="shippingText">
+      🚚 ENVÍOS A TODA GUATEMALA
+    </strong>
+
+    <span id="shippingPrice">
+      ENVÍO GRATIS
+    </span>
+
+  </div>
+
+
+  <div class="copyright">
+
+    © 2026
+    <span id="footerCopyright">
+      LEXUS
+    </span>
+
+    · TODOS LOS DERECHOS RESERVADOS
+
+  </div>
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   CONFIGURACIÓN
+===================================================== */
+
+const DEFAULT_SETTINGS = {
+
+  brand:"LEXUS",
+
+  heroTitle:"LEXUS",
+
+  heroText:
+  "Moda contemporánea, elegante y diseñada para destacar.",
+
+  welcomeText:
+  "Tu estilo. Tu identidad.",
+
+  heroBg:
+  "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1800&q=85",
+
+  welcomeBg:
+  "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1800&q=85",
+
+  whatsapp:"50236891432",
+
+  tiktok:
+  "https://www.tiktok.com/",
+
+  instagram:
+  "https://www.instagram.com/"
+
+};
+
+
+let settings =
+JSON.parse(
+localStorage.getItem("lexusSettings")
+) || DEFAULT_SETTINGS;
+
+
+/* =====================================================
+   ENVÍOS
+===================================================== */
+
+let shippingSettings =
+JSON.parse(
+localStorage.getItem("lexusShipping")
+) || {
+
+  text:"Envíos a toda Guatemala",
+
+  type:"gratis",
+
+  price:0
+
+};
+
+
+/* =====================================================
+   PRODUCTOS
+===================================================== */
+
+let products =
+JSON.parse(
+localStorage.getItem("lexusProducts")
+) || [
+
+  {
+    name:"Camisa Lexus",
+    category:"Camisas",
+    brand:"",
+    description:"Camisa de estilo moderno",
+    price:49,
+    image:
+    "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80"
+  },
+
+  {
+    name:"Polo Lexus",
+    category:"Polos",
+    brand:"",
+    description:"Polo clásico",
+    price:55,
+    image:
+    "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=800&q=80"
+  },
+
+  {
+    name:"Pantalón Lexus",
+    category:"Pantalones",
+    brand:"",
+    description:"Corte moderno",
+    price:69,
+    image:
+    "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=800&q=80"
+  },
+
+  {
+    name:"Suéter Lexus",
+    category:"Suéteres",
+    brand:"",
+    description:"Suéter casual",
+    price:99,
+    image:
+    "https://images.unsplash.com/photo-1551489186-cf8726f514f8?auto=format&fit=crop&w=800&q=80"
+  },
+
+  {
+    name:"Billetera Lexus",
+    category:"Billeteras",
+    brand:"",
+    description:"Diseño elegante",
+    price:59,
+    image:
+    "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80"
+  },
+
+  {
+    name:"Zapatos Lexus",
+    category:"Zapatos",
+    brand:"",
+    description:"Diseño moderno",
+    price:89,
+    image:
+    "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80"
+  },
+
+  {
+    name:"Gorra Barba Hats Negra",
+    category:"Gorras",
+    brand:"Barba Hats",
+    description:"Gorra negra",
+    price:75,
+    image:
+    "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=800&q=80"
+  },
+
+  {
+    name:"Gorra Barba Hats Blanca",
+    category:"Gorras",
+    brand:"Barba Hats",
+    description:"Gorra blanca",
+    price:75,
+    image:
+    "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80"
+  },
+
+  {
+    name:"Gorra Dandy Negra",
+    category:"Gorras",
+    brand:"Dandy",
+    description:"Gorra Dandy negra",
+    price:80,
+    image:
+    "https://images.unsplash.com/photo-1534215754734-18e55d13e346?auto=format&fit=crop&w=800&q=80"
+  },
+
+  {
+    name:"Gorra Dandy Blanca",
+    category:"Gorras",
+    brand:"Dandy",
+    description:"Gorra Dandy blanca",
+    price:80,
+    image:
+    "https://images.unsplash.com/photo-1575428652377-a2d80e2277fc?auto=format&fit=crop&w=800&q=80"
+  }
+
+];
+
+
+let cart=[];
+
+let selectedPayment="";
+
+
+/* =====================================================
+   CONFIGURACIÓN VISUAL
+===================================================== */
+
+function applySettings(){
+
+  document.title =
+  settings.brand+" | Tienda";
+
+  document.getElementById("navLogo")
+  .textContent=settings.brand;
+
+  document.getElementById("welcomeLogo")
+  .textContent=settings.brand;
+
+  document.getElementById("heroTitle")
+  .textContent=settings.heroTitle;
+
+  document.getElementById("heroText")
+  .textContent=settings.heroText;
+
+  document.getElementById("welcomeText")
+  .textContent=settings.welcomeText;
+
+  document.getElementById("collectionName")
+  .textContent=settings.brand;
+
+  document.getElementById("footerLogo")
+  .textContent=settings.brand;
+
+  document.getElementById("footerCopyright")
+  .textContent=settings.brand;
+
+
+  document.getElementById("welcome")
+  .style.backgroundImage=
+  `linear-gradient(#0005,#0008),
+   url("${settings.welcomeBg}")`;
+
+
+  document.querySelector(".hero")
+  .style.backgroundImage=
+  `linear-gradient(#0003,#0007),
+   url("${settings.heroBg}")`;
+
+
+  document.getElementById("tiktokLink")
+  .href=settings.tiktok;
+
+  document.getElementById("instagramLink")
+  .href=settings.instagram;
+
+  document.getElementById("whatsappLink")
+  .href=
+  "https://wa.me/"+settings.whatsapp;
+
+
+  applyShipping();
+}
+
+
+/* =====================================================
+   ENVÍOS
+===================================================== */
+
+function applyShipping(){
+
+  document.getElementById("shippingText")
+  .textContent=
+  "🚚 "+
+  shippingSettings.text.toUpperCase();
+
+
+  if(shippingSettings.type==="gratis"){
+
+    document.getElementById("shippingPrice")
+    .textContent=
+    "ENVÍO GRATIS";
+
+  }else{
+
+    document.getElementById("shippingPrice")
+    .textContent=
+    "ENVÍO: Q"+
+    Number(shippingSettings.price)
+    .toFixed(2);
+
+  }
+
+}
+
+
+/* =====================================================
+   NAVEGACIÓN
+===================================================== */
+
+function startShop(){
+
+  document
+  .getElementById("welcome")
+  .classList
+  .add("hide");
+
+  goShop();
+
+}
+
+
+function goHome(){
+
+  document
+  .getElementById("home")
+  .scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+
+function goShop(){
+
+  document
+  .getElementById("shop")
+  .scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =====================================================
+   CATEGORÍAS
+===================================================== */
+
+function showCategory(category,button){
+
+  let list;
+
+  if(category==="Todos"){
+
+    /*
+      LAS GORRAS NO APARECEN
+      EN "TODOS"
+    */
+
+    list=
+    products.filter(
+      p=>p.category!=="Gorras"
+    );
+
+  }else{
+
+    list=
+    products.filter(
+      p=>p.category===category
+    );
+
+  }
+
+
+  document.getElementById("brands")
+  .style.display="none";
+
+  document.getElementById("backBrands")
+  .style.display="none";
+
+
+  document.querySelectorAll(".category")
+  .forEach(
+    b=>b.classList.remove("active")
+  );
+
+
+  button.classList.add("active");
+
+  showProducts(list);
+
+}
+
+
+/* =====================================================
+   GORRAS
+===================================================== */
+
+function showCaps(button){
+
+  document.getElementById("products")
+  .innerHTML="";
+
+  document.getElementById("brands")
+  .style.display="grid";
+
+  document.getElementById("backBrands")
+  .style.display="none";
+
+
+  document.querySelectorAll(".category")
+  .forEach(
+    b=>b.classList.remove("active")
+  );
+
+  button.classList.add("active");
+
+}
+
+
+/* =====================================================
+   MARCAS
+===================================================== */
+
+function showBrand(brand){
+
+  document.getElementById("brands")
+  .style.display="none";
+
+  document.getElementById("backBrands")
+  .style.display="block";
+
+
+  let list=
+  products.filter(
+    p=>
+    p.category==="Gorras" &&
+    p.brand===brand
+  );
+
+
+  showProducts(list);
+
+}
+
+
+function backToBrands(){
+
+  document.getElementById("products")
+  .innerHTML="";
+
+  document.getElementById("backBrands")
+  .style.display="none";
+
+  document.getElementById("brands")
+  .style.display="grid";
+
+}
+
+
+/* =====================================================
+   PRODUCTOS
+===================================================== */
+
+function showProducts(list){
+
+  const box=
+  document.getElementById("products");
+
+  box.innerHTML="";
+
+
+  if(!list.length){
+
+    box.innerHTML=
+    '<p class="empty">No hay productos disponibles.</p>';
+
+    return;
+
+  }
+
+
+  list.forEach(product=>{
+
+    const index=
+    products.indexOf(product);
+
+
+    box.innerHTML+=`
+
+      <article class="product">
+
+        <div class="product-img">
+
+          <img
+          src="${product.image}"
+          alt="${product.name}">
+
+        </div>
+
+        <div class="product-info">
+
+          <h3>
+            ${product.name}
+          </h3>
+
+          <p>
+            ${product.description}
+          </p>
+
+          <p class="price">
+            Q${Number(product.price).toFixed(2)}
+          </p>
+
+          <button
+          class="btn"
+          onclick="addToCart(${index})">
+
+            AGREGAR AL CARRITO
+
+          </button>
+
+        </div>
+
+      </article>
+
+    `;
+
+  });
+
+}
+
+
+/* =====================================================
+   CARRITO
+===================================================== */
+
+function addToCart(index){
+
+  cart.push(products[index]);
+
+  renderCart();
+
+  openCart();
+
+}
+
+
+function getSubtotal(){
+
+  return cart.reduce(
+    (sum,p)=>
+    sum+Number(p.price),
+    0
+  );
+
+}
+
+
+function getShipping(){
+
+  if(
+    shippingSettings.type==="gratis"
+  ){
+
+    return 0;
+
+  }
+
+  return Number(
+    shippingSettings.price
+  )||0;
+
+}
+
+
+function renderCart(){
+
+  const box=
+  document.getElementById("cartItems");
+
+  box.innerHTML="";
+
+
+  if(!cart.length){
+
+    box.innerHTML=
+    '<p class="empty">Tu carrito está vacío.</p>';
+
+  }
+
+
+  cart.forEach((p,i)=>{
+
+    box.innerHTML+=`
+
+      <div class="cart-item">
+
+        <img src="${p.image}">
+
+        <div>
+
+          <strong>
+            ${p.name}
+          </strong>
+
+          <p>
+            Q${Number(p.price).toFixed(2)}
+          </p>
+
+        </div>
+
+        <button
+        onclick="removeFromCart(${i})">
+
+          ×
+
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+
+  const subtotal=
+  getSubtotal();
+
+  const shipping=
+  getShipping();
+
+  const total=
+  subtotal+shipping;
+
+
+  document.getElementById("cartCount")
+  .textContent=cart.length;
+
+
+  document.getElementById("cartSubtotal")
+  .textContent=
+  "Q"+subtotal.toFixed(2);
+
+
+  document.getElementById("cartShipping")
+  .textContent=
+  shipping===0
+  ? "GRATIS"
+  : "Q"+shipping.toFixed(2);
+
+
+  document.getElementById("cartTotal")
+  .textContent=
+  "Q"+total.toFixed(2);
+
+}
+
+
+function removeFromCart(i){
+
+  cart.splice(i,1);
+
+  renderCart();
+
+}
+
+
+function openCart(){
+
+  renderCart();
+
+  document
+  .getElementById("cartModal")
+  .classList
+  .add("open");
+
+}
+
+
+function closeCart(){
+
+  document
+  .getElementById("cartModal")
+  .classList
+  .remove("open");
+
+}
+
+
+/* =====================================================
+   PAGO
+===================================================== */
+
+function openPayment(){
+
+  if(!cart.length){
+
+    alert(
+      "Tu carrito está vacío."
+    );
+
+    return;
+
+  }
+
+  closeCart();
+
+  selectedPayment="";
+
+  document
+  .getElementById("paymentModal")
+  .classList
+  .add("open");
+
+}
+
+
+function closePayment(){
+
+  document
+  .getElementById("paymentModal")
+  .classList
+  .remove("open");
+
+}
+
+
+function selectPayment(payment){
+
+  selectedPayment=payment;
+
+  alert(
+    "Forma de pago seleccionada: "+
+    payment
+  );
+
+}
+
+
+/* =====================================================
+   WHATSAPP
+===================================================== */
+
+function sendWhatsApp(){
+
+  if(!cart.length){
+
+    alert(
+      "Tu carrito está vacío."
+    );
+
+    return;
+
+  }
+
+
+  if(!selectedPayment){
+
+    alert(
+      "Primero selecciona una forma de pago."
+    );
+
+    return;
+
+  }
+
+
+  let subtotal=
+  getSubtotal();
+
+  let shipping=
+  getShipping();
+
+  let total=
+  subtotal+shipping;
+
+
+  let message=
+  "Hola, quiero realizar un pedido en "+
+  settings.brand+
+  ".%0A%0A";
+
+
+  message+="PRODUCTOS:%0A";
+
+
+  cart.forEach((p,i)=>{
+
+    message+=
+    (i+1)+
+    ". "+
+    p.name+
+    " - Q"+
+    Number(p.price).toFixed(2)+
+    "%0A";
+
+  });
+
+
+  message+=
+  "%0ASUBTOTAL: Q"+
+  subtotal.toFixed(2);
+
+
+  message+=
+  "%0AENVÍO: "+
+  (
+    shipping===0
+    ?"GRATIS"
+    :"Q"+shipping.toFixed(2)
+  );
+
+
+  message+=
+  "%0ATOTAL: Q"+
+  total.toFixed(2);
+
+
+  message+=
+  "%0AFORMA DE PAGO: "+
+  selectedPayment;
+
+
+  message+=
+  "%0A%0AQuedo pendiente para completar mi compra.";
+
+
+  window.open(
+    "https://wa.me/"+
+    settings.whatsapp+
+    "?text="+
+    message,
+    "_blank"
+  );
+
+}
+
+
+/* =====================================================
+   CONFIGURACIÓN
+===================================================== */
+
+function openSettings(){
+
+  document.getElementById("setBrand")
+  .value=settings.brand;
+
+  document.getElementById("setHeroTitle")
+  .value=settings.heroTitle;
+
+  document.getElementById("setHeroText")
+  .value=settings.heroText;
+
+  document.getElementById("setWelcomeText")
+  .value=settings.welcomeText;
+
+  document.getElementById("setHeroBg")
+  .value=settings.heroBg;
+
+  document.getElementById("setWelcomeBg")
+  .value=settings.welcomeBg;
+
+  document.getElementById("setWhatsapp")
+  .value=settings.whatsapp;
+
+  document.getElementById("setTiktok")
+  .value=settings.tiktok;
+
+  document.getElementById("setInstagram")
+  .value=settings.instagram;
+
+
+  document.getElementById("setShippingText")
+  .value=shippingSettings.text;
+
+  document.getElementById("setShippingType")
+  .value=shippingSettings.type;
+
+  document.getElementById("setShippingPrice")
+  .value=shippingSettings.price;
+
+
+  renderAdminProducts();
+
+
+  document
+  .getElementById("settingsModal")
+  .classList
+  .add("open");
+
+}
+
+
+function closeSettings(){
+
+  document
+  .getElementById("settingsModal")
+  .classList
+  .remove("open");
+
+}
+
+
+/* =====================================================
+   PRODUCTOS ADMIN
+===================================================== */
+
+function renderAdminProducts(){
+
+  const box=
+  document.getElementById("adminProducts");
+
+  box.innerHTML="";
+
+
+  products.forEach((p,i)=>{
+
+    box.innerHTML+=`
+
+      <div class="admin-product">
+
+        <img src="${p.image}">
+
+        <div class="field">
+
+          <label>NOMBRE</label>
+
+          <input
+          value="${p.name}"
+          oninput="
+          products[${i}].name=this.value">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>CATEGORÍA</label>
+
+          <select
+          onchange="
+          products[${i}].category=this.value">
+
+            <option
+            ${p.category==="Camisas"?"selected":""}>
+            Camisas
+            </option>
+
+            <option
+            ${p.category==="Polos"?"selected":""}>
+            Polos
+            </option>
+
+            <option
+            ${p.category==="Pantalones"?"selected":""}>
+            Pantalones
+            </option>
+
+            <option
+            ${p.category==="Suéteres"?"selected":""}>
+            Suéteres
+            </option>
+
+            <option
+            ${p.category==="Billeteras"?"selected":""}>
+            Billeteras
+            </option>
+
+            <option
+            ${p.category==="Gorras"?"selected":""}>
+            Gorras
+            </option>
+
+            <option
+            ${p.category==="Zapatos"?"selected":""}>
+            Zapatos
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>MARCA</label>
+
+          <input
+          value="${p.brand||""}"
+          oninput="
+          products[${i}].brand=this.value">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>PRECIO</label>
+
+          <input
+          type="number"
+          value="${p.price}"
+          oninput="
+          products[${i}].price=this.value">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>IMAGEN</label>
+
+          <input
+          value="${p.image}"
+          oninput="
+          products[${i}].image=this.value">
+
+        </div>
+
+
+        <button
+        onclick="deleteProduct(${i})">
+
+          ELIMINAR PRODUCTO
+
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+/* =====================================================
+   AGREGAR PRODUCTO
+===================================================== */
+
+function addProduct(){
+
+  products.push({
+
+    name:"Nuevo producto",
+
+    category:"Camisas",
+
+    brand:"",
+
+    description:"Nuevo producto",
+
+    price:0,
+
+    image:
+    "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80"
+
+  });
+
+
+  renderAdminProducts();
+
+}
+
+
+/* =====================================================
+   ELIMINAR PRODUCTO
+===================================================== */
+
+function deleteProduct(i){
+
+  if(
+    confirm(
+      "¿Eliminar este producto?"
+    )
+  ){
+
+    products.splice(i,1);
+
+    renderAdminProducts();
+
+  }
+
+}
+
+
+/* =====================================================
+   GUARDAR TODO
+===================================================== */
+
+function saveSettings(){
+
+  settings={
+
+    brand:
+    document.getElementById("setBrand")
+    .value || "LEXUS",
+
+    heroTitle:
+    document.getElementById("setHeroTitle")
+    .value || "LEXUS",
+
+    heroText:
+    document.getElementById("setHeroText")
+    .value || "",
+
+    welcomeText:
+    document.getElementById("setWelcomeText")
+    .value || "",
+
+    heroBg:
+    document.getElementById("setHeroBg")
+    .value ||
+    DEFAULT_SETTINGS.heroBg,
+
+    welcomeBg:
+    document.getElementById("setWelcomeBg")
+    .value ||
+    DEFAULT_SETTINGS.welcomeBg,
+
+    whatsapp:
+    document.getElementById("setWhatsapp")
+    .value.replace(/\D/g,"")
+    || "50236891432",
+
+    tiktok:
+    document.getElementById("setTiktok")
+    .value ||
+    DEFAULT_SETTINGS.tiktok,
+
+    instagram:
+    document.getElementById("setInstagram")
+    .value ||
+    DEFAULT_SETTINGS.instagram
+
+  };
+
+
+  shippingSettings={
+
+    text:
+    document.getElementById("setShippingText")
+    .value ||
+    "Envíos a toda Guatemala",
+
+    type:
+    document.getElementById("setShippingType")
+    .value,
+
+    price:
+    Number(
+      document.getElementById("setShippingPrice")
+      .value
+    ) || 0
+
+  };
+
+
+  localStorage.setItem(
+    "lexusSettings",
+    JSON.stringify(settings)
+  );
+
+
+  localStorage.setItem(
+    "lexusShipping",
+    JSON.stringify(shippingSettings)
+  );
+
+
+  localStorage.setItem(
+    "lexusProducts",
+    JSON.stringify(products)
+  );
+
+
+  applySettings();
+
+
+  showProducts(
+    products.filter(
+      p=>p.category!=="Gorras"
+    )
+  );
+
+
+  alert(
+    "¡Todos los cambios fueron guardados!"
+  );
+
+
+  closeSettings();
+
+}
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+applySettings();
+
+showProducts(
+  products.filter(
+    p=>p.category!=="Gorras"
+  )
+);
+
+</script>
 
 </body>
 </html>
