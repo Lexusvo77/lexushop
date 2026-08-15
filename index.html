@@ -1595,7 +1595,7 @@ function getShipping(){
 
   }
 
-  return Number(
+  volver Number(
     shippingSettings.price
   )||0;
 
@@ -1639,7 +1639,7 @@ function renderCart(){
         </div>
 
         <button
-        onclick="removeFromCart(${i})">
+         onclick="removeFromCart( ${i})">
 
           ×
 
@@ -1866,83 +1866,91 @@ function sendWhatsApp(){
 
 
 /* =====================================================
-   CONFIGURACIÓN
+    CONFIGURACIÓN 
 ===================================================== */
+
+const PASSWORD_CONFIGURACION = "Luxe2026";
 
 function openSettings(){
 
-  document.getElementById("setBrand")
-  .value=settings.brand;
+  const password = prompt("🔐 CONTRASEÑA DE CONFIGURACIÓN");
 
-  document.getElementById("setHeroTitle")
-  .value=settings.heroTitle;
+  if(password !== PASSWORD_CONFIGURACION){
 
-  document.getElementById("setHeroText")
-  .value=settings.heroText;
+     alert("❌ Contraseña incorrecta."); 
+ retorno; return;
 
-  document.getElementById("setWelcomeText")
-  .value=settings.welcomeText;
+ } }
+
+ document.getElementById ("setBrand") document.getElementById("setBrand")
+ .value=settings.brand; value=settings.brand;
+
+ document.getElementById ("setHeroTitle") document.getElementById("setHeroTitle")
+ .value=settings.heroTitle; value=settings.heroTitle;
+
+ document.getElementById ("setHeroText") document.getElementById("setHeroText")
+ .value=settings.heroText; value=settings.heroText;
+
+ document.getElementById ("setWelcomeText") document.getElementById("setWelcomeText")
+ .value=settings.welcomeText; value=settings.welcomeText;
 
   document.getElementById("setHeroBg")
-  .value=settings.heroBg;
+ .value=settings.heroBg; value=settings.heroBg;
 
   document.getElementById("setWelcomeBg")
-  .value=settings.welcomeBg;
+ .value=sets.welcomeBg; value=settings.welcomeBg;
 
   document.getElementById("setWhatsapp")
-  .value=settings.whatsapp;
+ . 
 
   document.getElementById("setTiktok")
-  .value=settings.tiktok;
+ . 
 
   document.getElementById("setInstagram")
-  .value=settings.instagram;
-
+ . 
 
   document.getElementById("setShippingText")
-  .value=shippingSettings.text;
+ . 
 
   document.getElementById("setShippingType")
-  .value=shippingSettings.type;
+ . 
 
   document.getElementById("setShippingPrice")
-  .value=shippingSettings.price;
+ . 
 
-
-  renderAdminProducts();
-
+    renderAdminProducts(); renderAdminProducts(); 
 
   document
-  .getElementById("settingsModal")
-  .classList
-  .add("open");
+ . getElement ById ("configuración Modelo") getElementById("settingsModal")
+ . classList classList
+ . add ("abierto"); add("open");
 
-}
+}}
 
 
-function closeSettings(){
+función  closeSettings () { closeSettings(){
 
-  document
-  .getElementById("settingsModal")
-  .classList
-  .remove("open");
+ documento 
+  .getElement ById ("configuración Modelo") getElementById("settingsModal")getElement ById ("configuración Modelo") getElementById("settingsModal")
+ .classList classList
+ .remove ("abierto"); remove("open");
 
 }
 
 
 /* =====================================================
-   PRODUCTOS ADMIN
+}
 ===================================================== */
 
-function renderAdminProducts(){
+función renderAdminProducts () { renderAdminProducts(){
 
-  const box=
-  document.getElementById("adminProducts");
+ const box= 
+   document.getElementById("adminProducts"); 
 
-  box.innerHTML="";
+ box.innerHTML=""; 
 
 
-  products.forEach((p,i)=>{
+ products.forEach ((p,i) =>{ products.forEach((p,i)=>{
 
     box.innerHTML+=`
 
@@ -1972,7 +1980,7 @@ function renderAdminProducts(){
 
             <option
             ${p.category==="Camisas"?"selected":""}>
-            Camisas
+ . 
             </option>
 
             <option
@@ -2142,7 +2150,7 @@ function saveSettings(){
     .value ||
     DEFAULT_SETTINGS.heroBg,
 
-    welcomeBg:
+    Bienvenidos:
     document.getElementById("setWelcomeBg")
     .value ||
     DEFAULT_SETTINGS.welcomeBg,
