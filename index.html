@@ -513,9 +513,9 @@ header{
 
     <br>
 
-    <button class="start" onclick="startShop()">
-      COMENZAR
-    </button>
+    <button class="start" id="startButton" type="button">
+  COMENZAR
+</button>
 
   </div>
 
@@ -2247,6 +2247,18 @@ showProducts(
 function startShop() {
     alert("El botón funciona");
 }
+
+document.getElementById("startButton").addEventListener("click", function () {
+  const welcome = document.getElementById("welcome");
+
+  welcome.classList.add("hide");
+
+  setTimeout(function () {
+    document.getElementById("shop").scrollIntoView({
+      behavior: "smooth"
+    });
+  }, 100);
+});
 
 </script>
 
