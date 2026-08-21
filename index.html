@@ -196,7 +196,7 @@ header{
   color:#fff;
 }
 
-/* ================= MARCAS DE GORRAS ================= */
+/* ================= MARCAS ================= */
 
 #brands{
   display:none;
@@ -220,7 +220,9 @@ header{
   color:#fff;
 }
 
-.brand h3{letter-spacing:3px}
+.brand h3{
+  letter-spacing:3px;
+}
 
 #backBrands{
   display:none;
@@ -279,6 +281,30 @@ header{
 .product-info .btn{
   width:100%;
   margin-top:8px;
+}
+
+/* ================= NOTIFICACIÓN ================= */
+
+#cartNotification{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:9998;
+  background:#111;
+  color:#fff;
+  padding:15px 20px;
+  border-radius:4px;
+  font-size:12px;
+  box-shadow:0 8px 25px #0004;
+  transform:translateY(120px);
+  opacity:0;
+  transition:.3s;
+  pointer-events:none;
+}
+
+#cartNotification.show{
+  transform:translateY(0);
+  opacity:1;
 }
 
 /* ================= MODALES ================= */
@@ -393,6 +419,34 @@ header{
   margin-bottom:10px;
 }
 
+.delete-btn{
+  width:100%;
+  padding:10px;
+  border:1px solid #111;
+  background:#fff;
+  margin-top:5px;
+}
+
+/* ================= PAGO ================= */
+
+.payment-option{
+  width:100%;
+  border:0;
+  background:#111;
+  color:#fff;
+  padding:15px;
+  margin-bottom:10px;
+  letter-spacing:1px;
+}
+
+.payment-option.paypal{
+  background:#0070ba;
+}
+
+.payment-option.instagram{
+  background:#111;
+}
+
 /* ================= ENVÍOS ================= */
 
 .shipping-info{
@@ -465,7 +519,9 @@ header{
 
 @media(max-width:900px){
 
-  .menu{display:none}
+  .menu{
+    display:none;
+  }
 
   .products{
     grid-template-columns:repeat(2,1fr);
@@ -490,12 +546,19 @@ header{
     grid-template-columns:repeat(2,1fr);
     gap:10px;
   }
+
+  .logo{
+    font-size:20px;
+  }
+
+  .panel{
+    padding:20px;
+  }
 }
 </style>
 </head>
 
 <body>
-
 
 <!-- ================= INICIO ================= -->
 
@@ -513,12 +576,8 @@ header{
 
     <br>
 
-    <button
-  class="start"
-  onclick="document.getElementById('welcome').classList.add('hide'); document.getElementById('shop').scrollIntoView({behavior:'smooth'});">
-
-  COMENZAR
-
+    <button class="start" onclick="startShop()">
+      COMENZAR
     </button>
 
   </div>
@@ -526,9 +585,8 @@ header{
 </div>
 
 <div class="topbar">
-   ENVÍOS A TODA GUATEMALA 
+  ENVÍOS A TODA GUATEMALA
 </div>
-
 
 <!-- ================= NAV ================= -->
 
@@ -568,7 +626,6 @@ header{
 
 </header>
 
-
 <!-- ================= PORTADA ================= -->
 
 <section class="hero" id="home">
@@ -593,7 +650,6 @@ header{
 
 </section>
 
-
 <!-- ================= TIENDA ================= -->
 
 <section class="shop" id="shop">
@@ -609,7 +665,6 @@ header{
     </p>
 
   </div>
-
 
   <div class="categories">
 
@@ -643,8 +698,6 @@ header{
       BILLETERAS
     </button>
 
-    <!-- GORRAS -->
-
     <button class="category"
       onclick="showCaps(this)">
       GORRAS
@@ -652,52 +705,44 @@ header{
 
     <button class="category"
       onclick="showCategory('Zapatos',this)">
-       ZAPATOS 
+      ZAPATOS
     </button>
 
   </div>
-
-
-  <!-- LAS MARCAS SOLO APARECEN AL TOCAR GORRAS -->
 
   <div id="brands">
 
     <div class="brand"
       onclick="showBrand('Barba Hats')">
-
       <h3>BARBA HATS</h3>
-
     </div>
 
     <div class="brand"
       onclick="showBrand('Dandy')">
-
       <h3>DANDY</h3>
-
     </div>
 
     <div class="brand"
       onclick="showBrand('Otras')">
-
       <h3>OTRAS MARCAS</h3>
-
     </div>
 
   </div>
 
-
   <button id="backBrands"
     onclick="backToBrands()">
-
     ← VOLVER A MARCAS
-
   </button>
-
 
   <div class="products" id="products"></div>
 
 </section>
 
+<!-- ================= NOTIFICACIÓN ================= -->
+
+<div id="cartNotification">
+  🛒 Producto agregado al carrito
+</div>
 
 <!-- ================= CARRITO ================= -->
 
@@ -716,41 +761,29 @@ header{
     <div id="cartItems"></div>
 
     <div class="total">
-
       <span>SUBTOTAL</span>
-
       <span id="cartSubtotal">Q0.00</span>
-
     </div>
 
     <div class="total">
-
       <span>ENVÍO</span>
-
       <span id="cartShipping">Q0.00</span>
-
     </div>
 
     <div class="total">
-
       <span>TOTAL</span>
-
       <span id="cartTotal">Q0.00</span>
-
     </div>
 
     <button class="btn"
       style="width:100%"
       onclick="openPayment()">
-
       COMPRAR
-
     </button>
 
   </div>
 
 </div>
-
 
 <!-- ================= PAGO ================= -->
 
@@ -775,35 +808,31 @@ header{
 
     <div style="margin:25px 0">
 
-      <button class="btn"
-        style="width:100%;margin-bottom:10px"
-        onclick="selectPayment('Tarjeta')">
-
-        💳 PAGAR CON TARJETA
-
+      <button class="payment-option"
+        onclick="selectPayment('Depósito')">
+        🏦 PAGAR CON DEPÓSITO
       </button>
 
-      <button class="btn"
-        style="width:100%"
-        onclick="selectPayment('Depósito / Transferencia')">
+      <button class="payment-option paypal"
+        onclick="payWithPayPal()">
+        💙 PAGAR CON PAYPAL
+      </button>
 
-        🏦 DEPÓSITO / TRANSFERENCIA
-
+      <button class="payment-option instagram"
+        onclick="sendInstagram()">
+        📸 ENVIAR PEDIDO POR INSTAGRAM
       </button>
 
     </div>
 
-    <button class="save"
-      onclick="sendWhatsApp()">
-
-      💬 ENVIAR PEDIDO POR WHATSAPP
-
-    </button>
+    <p id="paymentSelected"
+       style="font-size:12px;color:#777;text-align:center">
+      No has seleccionado una forma de pago.
+    </p>
 
   </div>
 
 </div>
-
 
 <!-- ================= CONFIGURACIÓN ================= -->
 
@@ -822,126 +851,76 @@ header{
 
     </div>
 
-
     <p style="font-size:12px;color:#777;margin-bottom:20px">
-
       Desde aquí puedes editar la apariencia,
       productos, precios, WhatsApp y envíos.
-
     </p>
 
-
     <div class="field">
-
       <label>NOMBRE DE LA MARCA</label>
-
       <input id="setBrand">
-
     </div>
 
-
     <div class="field">
-
       <label>TÍTULO DE LA PORTADA</label>
-
       <input id="setHeroTitle">
-
     </div>
 
-
     <div class="field">
-
       <label>TEXTO DE LA PORTADA</label>
-
       <input id="setHeroText">
-
     </div>
 
-
     <div class="field">
-
       <label>TEXTO DE BIENVENIDA</label>
-
       <input id="setWelcomeText">
-
     </div>
 
-
     <div class="field">
-
       <label>FONDO DE LA PORTADA</label>
-
       <input id="setHeroBg"
         placeholder="URL de imagen">
-
     </div>
 
-
     <div class="field">
-
       <label>FONDO DE COMENZAR</label>
-
       <input id="setWelcomeBg"
         placeholder="URL de imagen">
-
     </div>
 
-
     <div class="field">
-
       <label>WHATSAPP</label>
-
-      <input id="setWhatsapp"
-        value="50236891432">
-
+      <input id="setWhatsapp">
     </div>
 
-
     <div class="field">
-
       <label>TIKTOK</label>
-
       <input id="setTiktok"
         placeholder="https://www.tiktok.com/@usuario">
-
     </div>
-
 
     <div class="field">
-
       <label>INSTAGRAM</label>
-
       <input id="setInstagram"
         placeholder="https://www.instagram.com/usuario">
-
     </div>
-
-
-    <!-- ================= ENVÍOS ================= -->
 
     <h3 style="margin:30px 0 15px">
       ENVÍOS
     </h3>
 
-
     <div class="field">
-
       <label>TEXTO DE ENVÍO</label>
-
-      <input id="setShippingText"
-        value="Envíos a toda Guatemala">
-
+      <input id="setShippingText">
     </div>
 
-
     <div class="field">
-
       <label>TIPO DE ENVÍO</label>
 
       <select id="setShippingType">
 
         <option value="gratis">
-           Envío gratis 
+          Envío gratis
         </option>
 
         <option value="cobrado">
@@ -952,19 +931,12 @@ header{
 
     </div>
 
-
     <div class="field">
-
       <label>PRECIO DEL ENVÍO EN Q</label>
 
       <input id="setShippingPrice"
-        type="number"
-        value="0">
-
+        type="number">
     </div>
-
-
-    <!-- ================= PRODUCTOS ================= -->
 
     <h3 style="margin:30px 0 15px">
       PRODUCTOS
@@ -972,27 +944,20 @@ header{
 
     <div id="adminProducts"></div>
 
-
     <button class="btn"
       style="width:100%;margin-bottom:15px"
       onclick="addProduct()">
-
       + AGREGAR PRODUCTO
-
     </button>
-
 
     <button class="save"
       onclick="saveSettings()">
-
       GUARDAR TODOS LOS CAMBIOS
-
     </button>
 
   </div>
 
 </div>
-
 
 <!-- ================= FOOTER ================= -->
 
@@ -1003,44 +968,31 @@ header{
     LEXUS
   </div>
 
-
   <div class="social-text">
     SÍGUENOS EN NUESTRAS PÁGINAS
   </div>
-
 
   <div class="social-links">
 
     <a id="tiktokLink"
       href="https://www.tiktok.com/"
       target="_blank">
-
       🎵 TikTok
-
     </a>
-
 
     <a id="instagramLink"
-      href="https://www.instagram.com/"
+      href="https://www.instagram.com/lexus777_gt"
       target="_blank">
-
       📸 Instagram
-
     </a>
-
 
     <a id="whatsappLink"
       href="https://wa.me/50236891432"
       target="_blank">
-
       💬 WhatsApp
-
     </a>
 
   </div>
-
-
-  <!-- ENVÍOS HASTA ABAJO -->
 
   <div class="shipping-info">
 
@@ -1054,7 +1006,6 @@ header{
 
   </div>
 
-
   <div class="copyright">
 
     © 2026
@@ -1067,7 +1018,6 @@ header{
   </div>
 
 </footer>
-
 
 <script>
 
@@ -1099,43 +1049,25 @@ const DEFAULT_SETTINGS = {
   "https://www.tiktok.com/",
 
   instagram:
-  "https://www.instagram.com/"
+  "https://www.instagram.com/lexus777_gt"
 
 };
-
 
 let settings =
-JSON.parse(
-localStorage.getItem("lexusSettings")
-) || DEFAULT_SETTINGS;
-
-
-/* =====================================================
-   ENVÍOS
-===================================================== */
+JSON.parse(localStorage.getItem("lexusSettings"))
+|| {...DEFAULT_SETTINGS};
 
 let shippingSettings =
-JSON.parse(
-localStorage.getItem("lexusShipping")
-) || {
-
+JSON.parse(localStorage.getItem("lexusShipping"))
+|| {
   text:"Envíos a toda Guatemala",
-
   type:"gratis",
-
   price:0
-
 };
 
-
-/* =====================================================
-   PRODUCTOS
-===================================================== */
-
 let products =
-JSON.parse(
-localStorage.getItem("lexusProducts")
-) || [
+JSON.parse(localStorage.getItem("lexusProducts"))
+|| [
 
   {
     name:"Camisa Lexus",
@@ -1239,11 +1171,27 @@ localStorage.getItem("lexusProducts")
 
 ];
 
-
 let cart=[];
-
 let selectedPayment="";
 
+/* =====================================================
+   INICIO
+===================================================== */
+
+function startShop(){
+
+  document
+  .getElementById("welcome")
+  .classList
+  .add("hide");
+
+  setTimeout(function(){
+
+    goShop();
+
+  },300);
+
+}
 
 /* =====================================================
    CONFIGURACIÓN VISUAL
@@ -1278,18 +1226,13 @@ function applySettings(){
   document.getElementById("footerCopyright")
   .textContent=settings.brand;
 
-
   document.getElementById("welcome")
   .style.backgroundImage=
-  `linear-gradient(#0005,#0008),
-   url("${settings.welcomeBg}")`;
-
+  `linear-gradient(#0005,#0008),url("${settings.welcomeBg}")`;
 
   document.querySelector(".hero")
   .style.backgroundImage=
-  `linear-gradient(#0003,#0007),
-   url("${settings.heroBg}")`;
-
+  `linear-gradient(#0003,#0007),url("${settings.heroBg}")`;
 
   document.getElementById("tiktokLink")
   .href=settings.tiktok;
@@ -1298,13 +1241,11 @@ function applySettings(){
   .href=settings.instagram;
 
   document.getElementById("whatsappLink")
-  .href=
-  "https://wa.me/"+settings.whatsapp;
-
+  .href="https://wa.me/"+settings.whatsapp;
 
   applyShipping();
-}
 
+}
 
 /* =====================================================
    ENVÍOS
@@ -1314,44 +1255,27 @@ function applyShipping(){
 
   document.getElementById("shippingText")
   .textContent=
-  "🚚 "+
-  shippingSettings.text.toUpperCase();
-
+  "🚚 "+shippingSettings.text.toUpperCase();
 
   if(shippingSettings.type==="gratis"){
 
     document.getElementById("shippingPrice")
-    .textContent=
-    "ENVÍO GRATIS";
+    .textContent="ENVÍO GRATIS";
 
   }else{
 
     document.getElementById("shippingPrice")
     .textContent=
     "ENVÍO: Q"+
-    Number(shippingSettings.price)
-    .toFixed(2);
+    Number(shippingSettings.price).toFixed(2);
 
   }
 
 }
 
-
 /* =====================================================
    NAVEGACIÓN
 ===================================================== */
-
-function startShop(){
-
-  document
-  .getElementById("welcome")
-  .classList
-  .add("hide");
-
-  goShop();
-
-}
-
 
 function goHome(){
 
@@ -1363,7 +1287,6 @@ function goHome(){
 
 }
 
-
 function goShop(){
 
   document
@@ -1373,7 +1296,6 @@ function goShop(){
   });
 
 }
-
 
 /* =====================================================
    CATEGORÍAS
@@ -1385,25 +1307,17 @@ function showCategory(category,button){
 
   if(category==="Todos"){
 
-    /*
-      LAS GORRAS NO APARECEN
-      EN "TODOS"
-    */
-
-    list=
-    products.filter(
+    list=products.filter(
       p=>p.category!=="Gorras"
     );
 
   }else{
 
-    list=
-    products.filter(
+    list=products.filter(
       p=>p.category===category
     );
 
   }
-
 
   document.getElementById("brands")
   .style.display="none";
@@ -1411,19 +1325,16 @@ function showCategory(category,button){
   document.getElementById("backBrands")
   .style.display="none";
 
-
   document.querySelectorAll(".category")
   .forEach(
     b=>b.classList.remove("active")
   );
-
 
   button.classList.add("active");
 
   showProducts(list);
 
 }
-
 
 /* =====================================================
    GORRAS
@@ -1440,7 +1351,6 @@ function showCaps(button){
   document.getElementById("backBrands")
   .style.display="none";
 
-
   document.querySelectorAll(".category")
   .forEach(
     b=>b.classList.remove("active")
@@ -1449,7 +1359,6 @@ function showCaps(button){
   button.classList.add("active");
 
 }
-
 
 /* =====================================================
    MARCAS
@@ -1463,19 +1372,15 @@ function showBrand(brand){
   document.getElementById("backBrands")
   .style.display="block";
 
-
-  let list=
-  products.filter(
+  let list=products.filter(
     p=>
     p.category==="Gorras" &&
     p.brand===brand
   );
 
-
   showProducts(list);
 
 }
-
 
 function backToBrands(){
 
@@ -1490,7 +1395,6 @@ function backToBrands(){
 
 }
 
-
 /* =====================================================
    PRODUCTOS
 ===================================================== */
@@ -1502,7 +1406,6 @@ function showProducts(list){
 
   box.innerHTML="";
 
-
   if(!list.length){
 
     box.innerHTML=
@@ -1512,12 +1415,9 @@ function showProducts(list){
 
   }
 
-
   list.forEach(product=>{
 
-    const index=
-    products.indexOf(product);
-
+    const index=products.indexOf(product);
 
     box.innerHTML+=`
 
@@ -1526,20 +1426,17 @@ function showProducts(list){
         <div class="product-img">
 
           <img
-          src="${product.image}"
-          alt="${product.name}">
+          src="${escapeHtml(product.image)}"
+          alt="${escapeHtml(product.name)}"
+          onerror="this.src='https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80'">
 
         </div>
 
         <div class="product-info">
 
-          <h3>
-            ${product.name}
-          </h3>
+          <h3>${escapeHtml(product.name)}</h3>
 
-          <p>
-            ${product.description}
-          </p>
+          <p>${escapeHtml(product.description)}</p>
 
           <p class="price">
             Q${Number(product.price).toFixed(2)}
@@ -1548,9 +1445,7 @@ function showProducts(list){
           <button
           class="btn"
           onclick="addToCart(${index})">
-
             AGREGAR AL CARRITO
-
           </button>
 
         </div>
@@ -1563,6 +1458,20 @@ function showProducts(list){
 
 }
 
+/* =====================================================
+   SEGURIDAD PARA TEXTO
+===================================================== */
+
+function escapeHtml(text){
+
+  return String(text ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
 
 /* =====================================================
    CARRITO
@@ -1570,42 +1479,50 @@ function showProducts(list){
 
 function addToCart(index){
 
+  if(!products[index]) return;
+
   cart.push(products[index]);
 
   renderCart();
 
-  openCart();
+  showCartNotification();
 
 }
 
+function showCartNotification(){
+
+  const notification=
+  document.getElementById("cartNotification");
+
+  notification.classList.add("show");
+
+  setTimeout(function(){
+
+    notification.classList.remove("show");
+
+  },2000);
+
+}
 
 function getSubtotal(){
 
   return cart.reduce(
     (sum,p)=>
-    sum+Number(p.price),
+    sum+Number(p.price||0),
     0
   );
 
 }
 
-
 function getShipping(){
 
-  if(
-    shippingSettings.type==="gratis"
-  ){
-
+  if(shippingSettings.type==="gratis"){
     return 0;
-
   }
 
-  volver Number(
-    shippingSettings.price
-  )||0;
+  return Number(shippingSettings.price)||0;
 
 }
-
 
 function renderCart(){
 
@@ -1614,7 +1531,6 @@ function renderCart(){
 
   box.innerHTML="";
 
-
   if(!cart.length){
 
     box.innerHTML=
@@ -1622,20 +1538,19 @@ function renderCart(){
 
   }
 
-
   cart.forEach((p,i)=>{
 
     box.innerHTML+=`
 
       <div class="cart-item">
 
-        <img src="${p.image}">
+        <img
+        src="${escapeHtml(p.image)}"
+        alt="${escapeHtml(p.name)}">
 
         <div>
 
-          <strong>
-            ${p.name}
-          </strong>
+          <strong>${escapeHtml(p.name)}</strong>
 
           <p>
             Q${Number(p.price).toFixed(2)}
@@ -1644,10 +1559,8 @@ function renderCart(){
         </div>
 
         <button
-         onclick="removeFromCart( ${i})">
-
+        onclick="removeFromCart(${i})">
           ×
-
         </button>
 
       </div>
@@ -1656,39 +1569,28 @@ function renderCart(){
 
   });
 
-
-  const subtotal=
-  getSubtotal();
-
-  const shipping=
-  getShipping();
-
-  const total=
-  subtotal+shipping;
-
+  const subtotal=getSubtotal();
+  const shipping=getShipping();
+  const total=subtotal+shipping;
 
   document.getElementById("cartCount")
   .textContent=cart.length;
-
 
   document.getElementById("cartSubtotal")
   .textContent=
   "Q"+subtotal.toFixed(2);
 
-
   document.getElementById("cartShipping")
   .textContent=
   shipping===0
-  ? "GRATIS"
-  : "Q"+shipping.toFixed(2);
-
+  ?"GRATIS"
+  :"Q"+shipping.toFixed(2);
 
   document.getElementById("cartTotal")
   .textContent=
   "Q"+total.toFixed(2);
 
 }
-
 
 function removeFromCart(i){
 
@@ -1697,7 +1599,6 @@ function removeFromCart(i){
   renderCart();
 
 }
-
 
 function openCart(){
 
@@ -1710,7 +1611,6 @@ function openCart(){
 
 }
 
-
 function closeCart(){
 
   document
@@ -1720,7 +1620,6 @@ function closeCart(){
 
 }
 
-
 /* =====================================================
    PAGO
 ===================================================== */
@@ -1729,9 +1628,7 @@ function openPayment(){
 
   if(!cart.length){
 
-    alert(
-      "Tu carrito está vacío."
-    );
+    alert("Tu carrito está vacío.");
 
     return;
 
@@ -1741,13 +1638,16 @@ function openPayment(){
 
   selectedPayment="";
 
+  document.getElementById("paymentSelected")
+  .textContent=
+  "No has seleccionado una forma de pago.";
+
   document
   .getElementById("paymentModal")
   .classList
   .add("open");
 
 }
-
 
 function closePayment(){
 
@@ -1758,71 +1658,75 @@ function closePayment(){
 
 }
 
-
 function selectPayment(payment){
 
   selectedPayment=payment;
 
-  alert(
-    "Forma de pago seleccionada: "+
-    payment
+  document.getElementById("paymentSelected")
+  .textContent=
+  "Forma de pago seleccionada: "+payment;
+
+  if(payment==="Depósito"){
+
+    alert(
+      "Has seleccionado pagar con depósito. Comunícate con LEXUS para recibir los datos del depósito."
+    );
+
+  }
+
+}
+
+/* =====================================================
+   PAYPAL
+===================================================== */
+
+function payWithPayPal(){
+
+  if(!cart.length){
+
+    alert("Tu carrito está vacío.");
+
+    return;
+
+  }
+
+  selectedPayment="PayPal";
+
+  window.open(
+    "https://www.paypal.me/alaan77",
+    "_blank"
   );
 
 }
 
-
 /* =====================================================
-   WHATSAPP
+   INSTAGRAM
 ===================================================== */
 
-function sendWhatsApp(){
+function sendInstagram(){
 
   if(!cart.length){
 
-    alert(
-      "Tu carrito está vacío."
-    );
+    alert("Tu carrito está vacío.");
 
     return;
 
   }
 
+  selectedPayment="Instagram";
 
-  if(!selectedPayment){
-
-    alert(
-      "Primero selecciona una forma de pago."
-    );
-
-    return;
-
-  }
-
-
-  let subtotal=
-  getSubtotal();
-
-  let shipping=
-  getShipping();
-
-  let total=
-  subtotal+shipping;
-
+  let subtotal=getSubtotal();
+  let shipping=getShipping();
+  let total=subtotal+shipping;
 
   let message=
-  "Hola, quiero realizar un pedido en "+
-  settings.brand+
-  ".%0A%0A";
-
-
-  message+="PRODUCTOS:%0A";
-
+  "Hola LEXUS 👋%0A%0A"+
+  "Quiero realizar este pedido:%0A%0A";
 
   cart.forEach((p,i)=>{
 
     message+=
-    (i+1)+
-    ". "+
+    (i+1)+". "+
     p.name+
     " - Q"+
     Number(p.price).toFixed(2)+
@@ -1830,210 +1734,207 @@ function sendWhatsApp(){
 
   });
 
-
   message+=
   "%0ASUBTOTAL: Q"+
   subtotal.toFixed(2);
 
-
   message+=
   "%0AENVÍO: "+
-  (
-    shipping===0
-    ?"GRATIS"
-    :"Q"+shipping.toFixed(2)
-  );
-
+  (shipping===0
+  ?"GRATIS"
+  :"Q"+shipping.toFixed(2));
 
   message+=
   "%0ATOTAL: Q"+
   total.toFixed(2);
 
-
-  message+=
-  "%0AFORMA DE PAGO: "+
-  selectedPayment;
-
-
   message+=
   "%0A%0AQuedo pendiente para completar mi compra.";
 
+  /*
+    Instagram no permite enviar un mensaje directo
+    con texto automáticamente desde un enlace web.
+    Por eso abrimos directamente el perfil.
+  */
 
   window.open(
-    "https://wa.me/"+
-    settings.whatsapp+
-    "?text="+
-    message,
+    "https://www.instagram.com/lexus777_gt/",
     "_blank"
   );
 
 }
 
-
 /* =====================================================
-    CONFIGURACIÓN 
+   CONFIGURACIÓN
 ===================================================== */
 
-const PASSWORD_CONFIGURACION = "Luxe2026";
+const PASSWORD_CONFIGURACION="lexus26";
 
 function openSettings(){
 
-  const password = prompt("🔐 CONTRASEÑA DE CONFIGURACIÓN");
+  const password=
+  prompt("🔐 CONTRASEÑA DE CONFIGURACIÓN");
 
-  if(password !== PASSWORD_CONFIGURACION){
+  if(password!==PASSWORD_CONFIGURACION){
 
-     alert("❌ Contraseña incorrecta."); 
- retorno; return;
+    if(password!==null){
+      alert("❌ Contraseña incorrecta.");
+    }
 
- } }
+    return;
 
- document.getElementById ("setBrand") document.getElementById("setBrand")
- .value=settings.brand; value=settings.brand;
+  }
 
- document.getElementById ("setHeroTitle") document.getElementById("setHeroTitle")
- .value=settings.heroTitle; value=settings.heroTitle;
+  document.getElementById("setBrand")
+  .value=settings.brand;
 
- document.getElementById ("setHeroText") document.getElementById("setHeroText")
- .value=settings.heroText; value=settings.heroText;
+  document.getElementById("setHeroTitle")
+  .value=settings.heroTitle;
 
- document.getElementById ("setWelcomeText") document.getElementById("setWelcomeText")
- .value=settings.welcomeText; value=settings.welcomeText;
+  document.getElementById("setHeroText")
+  .value=settings.heroText;
+
+  document.getElementById("setWelcomeText")
+  .value=settings.welcomeText;
 
   document.getElementById("setHeroBg")
- .value=settings.heroBg; value=settings.heroBg;
+  .value=settings.heroBg;
 
   document.getElementById("setWelcomeBg")
- .value=sets.welcomeBg; value=settings.welcomeBg;
+  .value=settings.welcomeBg;
 
   document.getElementById("setWhatsapp")
- . 
+  .value=settings.whatsapp;
 
   document.getElementById("setTiktok")
- . 
+  .value=settings.tiktok;
 
   document.getElementById("setInstagram")
- . 
+  .value=settings.instagram;
 
   document.getElementById("setShippingText")
- . 
+  .value=shippingSettings.text;
 
   document.getElementById("setShippingType")
- . 
+  .value=shippingSettings.type;
 
   document.getElementById("setShippingPrice")
- . 
+  .value=shippingSettings.price;
 
-    renderAdminProducts(); renderAdminProducts(); 
+  renderAdminProducts();
 
   document
- . getElement ById ("configuración Modelo") getElementById("settingsModal")
- . classList classList
- . add ("abierto"); add("open");
-
-}}
-
-
-función  closeSettings () { closeSettings(){
-
- documento 
-  .getElement ById ("configuración Modelo") getElementById("settingsModal")getElement ById ("configuración Modelo") getElementById("settingsModal")
- .classList classList
- .remove ("abierto"); remove("open");
+  .getElementById("settingsModal")
+  .classList
+  .add("open");
 
 }
 
+function closeSettings(){
+
+  document
+  .getElementById("settingsModal")
+  .classList
+  .remove("open");
+
+}
 
 /* =====================================================
-}
+   PRODUCTOS ADMIN
 ===================================================== */
 
-función renderAdminProducts () { renderAdminProducts(){
+function renderAdminProducts(){
 
- const box= 
-   document.getElementById("adminProducts"); 
+  const box=
+  document.getElementById("adminProducts");
 
- box.innerHTML=""; 
+  box.innerHTML="";
 
-
- products.forEach ((p,i) =>{ products.forEach((p,i)=>{
+  products.forEach((p,i)=>{
 
     box.innerHTML+=`
 
       <div class="admin-product">
 
-        <img src="${p.image}">
+        <img
+        src="${escapeHtml(p.image)}"
+        alt="${escapeHtml(p.name)}">
 
         <div class="field">
 
           <label>NOMBRE</label>
 
           <input
-          value="${p.name}"
-          oninput="
-          products[${i}].name=this.value">
+          value="${escapeHtml(p.name)}"
+          oninput="products[${i}].name=this.value">
 
         </div>
 
+        <div class="field">
+
+          <label>DESCRIPCIÓN</label>
+
+          <input
+          value="${escapeHtml(p.description)}"
+          oninput="products[${i}].description=this.value">
+
+        </div>
 
         <div class="field">
 
           <label>CATEGORÍA</label>
 
           <select
-          onchange="
-          products[${i}].category=this.value">
+          onchange="products[${i}].category=this.value">
 
-            <option
+            <option value="Camisas"
             ${p.category==="Camisas"?"selected":""}>
- . 
+              Camisas
             </option>
 
-            <option
+            <option value="Polos"
             ${p.category==="Polos"?"selected":""}>
-            Polos
+              Polos
             </option>
 
-            <option
+            <option value="Pantalones"
             ${p.category==="Pantalones"?"selected":""}>
-            Pantalones
+              Pantalones
             </option>
 
-            <option
+            <option value="Suéteres"
             ${p.category==="Suéteres"?"selected":""}>
-            Suéteres
+              Suéteres
             </option>
 
-            <option
+            <option value="Billeteras"
             ${p.category==="Billeteras"?"selected":""}>
-            Billeteras
+              Billeteras
             </option>
 
-            <option
+            <option value="Gorras"
             ${p.category==="Gorras"?"selected":""}>
-            Gorras
+              Gorras
             </option>
 
-            <option
+            <option value="Zapatos"
             ${p.category==="Zapatos"?"selected":""}>
-            Zapatos
+              Zapatos
             </option>
 
           </select>
 
         </div>
 
-
         <div class="field">
 
           <label>MARCA</label>
 
           <input
-          value="${p.brand||""}"
-          oninput="
-          products[${i}].brand=this.value">
+          value="${escapeHtml(p.brand||"")}"
+          oninput="products[${i}].brand=this.value">
 
         </div>
-
 
         <div class="field">
 
@@ -2041,30 +1942,25 @@ función renderAdminProducts () { renderAdminProducts(){
 
           <input
           type="number"
-          value="${p.price}"
-          oninput="
-          products[${i}].price=this.value">
+          value="${Number(p.price)||0}"
+          oninput="products[${i}].price=this.value">
 
         </div>
-
 
         <div class="field">
 
           <label>IMAGEN</label>
 
           <input
-          value="${p.image}"
-          oninput="
-          products[${i}].image=this.value">
+          value="${escapeHtml(p.image)}"
+          oninput="products[${i}].image=this.value">
 
         </div>
 
-
         <button
+        class="delete-btn"
         onclick="deleteProduct(${i})">
-
           ELIMINAR PRODUCTO
-
         </button>
 
       </div>
@@ -2074,7 +1970,6 @@ función renderAdminProducts () { renderAdminProducts(){
   });
 
 }
-
 
 /* =====================================================
    AGREGAR PRODUCTO
@@ -2099,11 +1994,9 @@ function addProduct(){
 
   });
 
-
   renderAdminProducts();
 
 }
-
 
 /* =====================================================
    ELIMINAR PRODUCTO
@@ -2111,11 +2004,7 @@ function addProduct(){
 
 function deleteProduct(i){
 
-  if(
-    confirm(
-      "¿Eliminar este producto?"
-    )
-  ){
+  if(confirm("¿Eliminar este producto?")){
 
     products.splice(i,1);
 
@@ -2124,7 +2013,6 @@ function deleteProduct(i){
   }
 
 }
-
 
 /* =====================================================
    GUARDAR TODO
@@ -2135,89 +2023,76 @@ function saveSettings(){
   settings={
 
     brand:
-    document.getElementById("setBrand")
-    .value || "LEXUS",
+    document.getElementById("setBrand").value.trim()
+    ||"LEXUS",
 
     heroTitle:
-    document.getElementById("setHeroTitle")
-    .value || "LEXUS",
+    document.getElementById("setHeroTitle").value.trim()
+    ||"LEXUS",
 
     heroText:
-    document.getElementById("setHeroText")
-    .value || "",
+    document.getElementById("setHeroText").value.trim()
+    ||"",
 
     welcomeText:
-    document.getElementById("setWelcomeText")
-    .value || "",
+    document.getElementById("setWelcomeText").value.trim()
+    ||"",
 
     heroBg:
-    document.getElementById("setHeroBg")
-    .value ||
-    DEFAULT_SETTINGS.heroBg,
+    document.getElementById("setHeroBg").value.trim()
+    ||DEFAULT_SETTINGS.heroBg,
 
-    Bienvenidos:
-    document.getElementById("setWelcomeBg")
-    .value ||
-    DEFAULT_SETTINGS.welcomeBg,
+    welcomeBg:
+    document.getElementById("setWelcomeBg").value.trim()
+    ||DEFAULT_SETTINGS.welcomeBg,
 
     whatsapp:
-    document.getElementById("setWhatsapp")
-    .value.replace(/\D/g,"")
-    || "50236891432",
+    document.getElementById("setWhatsapp").value
+    .replace(/\D/g,"")
+    ||"50236891432",
 
     tiktok:
-    document.getElementById("setTiktok")
-    .value ||
-    DEFAULT_SETTINGS.tiktok,
+    document.getElementById("setTiktok").value.trim()
+    ||DEFAULT_SETTINGS.tiktok,
 
     instagram:
-    document.getElementById("setInstagram")
-    .value ||
-    DEFAULT_SETTINGS.instagram
+    document.getElementById("setInstagram").value.trim()
+    ||DEFAULT_SETTINGS.instagram
 
   };
-
 
   shippingSettings={
 
     text:
-    document.getElementById("setShippingText")
-    .value ||
-    "Envíos a toda Guatemala",
+    document.getElementById("setShippingText").value.trim()
+    ||"Envíos a toda Guatemala",
 
     type:
-    document.getElementById("setShippingType")
-    .value,
+    document.getElementById("setShippingType").value,
 
     price:
     Number(
-      document.getElementById("setShippingPrice")
-      .value
-    ) || 0
+      document.getElementById("setShippingPrice").value
+    )||0
 
   };
-
 
   localStorage.setItem(
     "lexusSettings",
     JSON.stringify(settings)
   );
 
-
   localStorage.setItem(
     "lexusShipping",
     JSON.stringify(shippingSettings)
   );
 
-
   localStorage.setItem(
     "lexusProducts",
     JSON.stringify(products)
   );
-                          
 
   applySettings();
-
 
   showProducts(
     products.filter(
@@ -2225,39 +2100,52 @@ function saveSettings(){
     )
   );
 
-
-  alert(
-    "¡Todos los cambios fueron guardados!"
-  );
-
+  alert("✅ ¡Todos los cambios fueron guardados!");
 
   closeSettings();
 
 }
 
-
 /* =====================================================
-   INICIAR
+   CERRAR MODALES AL TOCAR FUERA
 ===================================================== */
 
-try {
+document.querySelectorAll(".modal")
+.forEach(modal=>{
+
+  modal.addEventListener("click",function(e){
+
+    if(e.target===modal){
+
+      modal.classList.remove("open");
+
+    }
+
+  });
+
+});
+
+/* =====================================================
+   INICIAR PÁGINA
+===================================================== */
+
+try{
 
   applySettings();
 
   showProducts(
     products.filter(
-      p => p && p.category !== "Gorras"
+      p=>p && p.category!=="Gorras"
     )
   );
 
-} catch(error) {
-
-  alert(
-    "ERROR AL INICIAR: " +
-    error.message
-  );
+}catch(error){
 
   console.error(error);
+
+  document.getElementById("products")
+  .innerHTML=
+  '<p class="empty">No se pudieron cargar los productos.</p>';
 
 }
 
