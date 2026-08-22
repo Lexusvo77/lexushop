@@ -1992,7 +1992,10 @@ async function uploadProductImage(input, index){
 
   formData.append("file", file);
 
-  formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+  formData.append(
+    "upload_preset",
+    CLOUDINARY_UPLOAD_PRESET
+  );
 
   try{
 
